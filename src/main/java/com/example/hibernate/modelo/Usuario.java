@@ -16,8 +16,35 @@ public class Usuario implements Serializable {
     @Column(name="contrasena")
     private String contrasena;
 
+    public Usuario() {
+    }
+
     public Usuario(String nombre, String contrasena) {
         this.nombre = nombre;
+        this.contrasena = contrasena;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 }

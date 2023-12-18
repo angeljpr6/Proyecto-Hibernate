@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hibernate.controlador.InterfazPrincipal">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Bienvenido">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="nombUsuario" layoutX="113.0" layoutY="19.0" prefHeight="17.0" prefWidth="124.0" text="nombre de usuario" />
+      <Label layoutX="273.0" layoutY="57.0" text="Ajustes">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="cambiarNombreLabel" layoutX="29.0" layoutY="125.0" onMouseClicked="#abrirCambioNombre" text="Cambiar Nombre">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="cambiarContLabel" layoutX="29.0" layoutY="161.0" onMouseClicked="#abrirCambioContra" style="-fx-text-fill: gray;" text="Cambiar Contraseña">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="eliminarCuentLabel" layoutX="29.0" layoutY="200.0" onMouseClicked="#abrirEliminarCuenta" style="-fx-text-fill: gray;" text="Eliminar Cuenta">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Pane fx:id="cambiarNombrePane" layoutX="200.0" layoutY="113.0" prefHeight="246.0" prefWidth="365.0" style="-fx-background-color: lightgray; -fx-background-radius: 15px;">
+         <children>
+            <Label layoutX="38.0" layoutY="23.0" text="Introduce el nuevo nombre">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="82.0" text="Introduce tu contraseña">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nuevoNombre" layoutX="38.0" layoutY="44.0" prefHeight="25.0" prefWidth="180.0" />
+            <PasswordField fx:id="contNuevoNombre" layoutX="38.0" layoutY="103.0" prefHeight="25.0" prefWidth="180.0" />
+            <Button layoutX="157.0" layoutY="156.0" mnemonicParsing="false" onMouseClicked="#cambiarNombre" text="Aceptar" />
+            <Label fx:id="nomUsuarioExistente" layoutX="78.0" layoutY="197.0" text="El nombre de usuario no esta disponible" textFill="RED" visible="false" />
+            <Label fx:id="contIncorrectaNuevNom" layoutX="127.0" layoutY="197.0" text="Contraseña incorrecta" textFill="RED" visible="false" />
+         </children>
+      </Pane>
+      <Pane fx:id="cambiarContPane" layoutX="200.0" layoutY="113.0" prefHeight="246.0" prefWidth="365.0" style="-fx-background-color: lightgray; -fx-background-radius: 15px;" visible="false">
+         <children>
+            <Label layoutX="38.0" layoutY="82.0" text="Introduce la nueva contraseña">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="nuevaCont" layoutX="38.0" layoutY="103.0" prefHeight="25.0" prefWidth="180.0" />
+            <Button layoutX="157.0" layoutY="156.0" mnemonicParsing="false" onMouseClicked="#cambiarContrasena" text="Aceptar" />
+            <Label layoutX="38.0" layoutY="23.0" text="Introduce tu contraseña actual">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="antCont" layoutX="38.0" layoutY="44.0" prefHeight="25.0" prefWidth="180.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="eliminarCuentaPane" layoutX="200.0" layoutY="113.0" prefHeight="246.0" prefWidth="365.0" style="-fx-background-color: lightgray; -fx-background-radius: 15px;" visible="false">
+         <children>
+            <Button layoutX="154.0" layoutY="88.0" mnemonicParsing="false" onMouseClicked="#eliminarCuent" text="Aceptar" />
+            <Label layoutX="106.0" layoutY="23.0" text="Introduce tu contraseña">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="contEliminarCuenta" layoutX="95.0" layoutY="47.0" prefHeight="25.0" prefWidth="180.0" />
+            <Pane fx:id="confEliminarCuentPane" layoutX="63.0" layoutY="133.0" prefHeight="81.0" prefWidth="245.0" style="-fx-background-color: white; -fx-background-radius: 15px;" visible="false">
+               <children>
+                  <Label layoutX="21.0" layoutY="14.0" text="¿Deseas eliminar tu cuenta?" textFill="RED">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="72.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#confEliminarCuenta" style="-fx-background-color: red;" text="Eliminar cuenta" textFill="WHITE" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Label layoutX="492.0" layoutY="62.0" onMouseClicked="#abrirAmigos" text="Lista de amigos" />
+      <Pane fx:id="amigosPane" layoutX="29.0" layoutY="61.0" prefHeight="324.0" prefWidth="560.0" style="-fx-background-color: lightgray; -fx-background-radius: 15px;" visible="false">
+         <children>
+            <ScrollPane fx:id="listaAmigos" layoutX="14.0" layoutY="14.0" prefHeight="295.0" prefWidth="245.0" />
+            <TextField fx:id="nombreAmigoAnadir" layoutX="336.0" layoutY="45.0" promptText="Nombre de usuario" />
+            <Label layoutX="366.0" layoutY="22.0" text="Añade un amigo" />
+            <TextField fx:id="nombreAmigoElimin" layoutX="335.0" layoutY="185.0" promptText="Nombre de usuario" />
+            <Label layoutX="365.0" layoutY="162.0" text="Elimina un amigo" />
+            <Button layoutX="385.0" layoutY="79.0" mnemonicParsing="false" text="Añadir" />
+            <Button layoutX="381.0" layoutY="222.0" mnemonicParsing="false" text="Eliminar" />
+            <Button layoutX="497.0" layoutY="285.0" mnemonicParsing="false" onMouseClicked="#cerrarAmigos" text="Cerrar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
