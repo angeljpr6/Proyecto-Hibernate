@@ -27,7 +27,12 @@ public class InicioSesion {
      * Inicia Sesion con los datos introducidos
      * @param mouseEvent
      */
-    public void iniciarSesion(MouseEvent mouseEvent) {
+    public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
+        Usuario usuario=UsuarioManager.buscarUsuarioPorNombre(nomIniciar.getText());
+        if (usuario!=null){
+            InterfazPrincipal.usuario=usuario;
+            cambiarVentana();
+        }
     }
 
     /**
@@ -39,20 +44,23 @@ public class InicioSesion {
         String segundaCont = cont2Crear.getText();
         if (primeraCont.equals(segundaCont)){
             Usuario usuario=new Usuario(nomCrear.getText(),primeraCont);
-            if (UsuarioManager.insertUsuario(usuario)){
-
+            if (UsuarioManager.insertarUsuario(usuario)){
                 InterfazPrincipal.usuario=usuario;
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hibernate/interfaz-principal.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Stage intPrincipalStage = new Stage();
-                intPrincipalStage.setTitle("Inicio Artista");
-                intPrincipalStage.setResizable(false);
-                intPrincipalStage.setScene(scene);
-                intPrincipalStage.show();
-                Stage myStage = (Stage) this.contIniciar.getScene().getWindow();
-                myStage.close();
+                cambiarVentana();
             }else ;// TODO: 18/12/2023 error nombreUsuario
         }
+    }
+    public void cambiarVentana() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hibernate/interfaz-principal.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage intPrincipalStage = new Stage();
+        intPrincipalStage.setTitle("Inicio Artista");
+        intPrincipalStage.setResizable(false);
+        intPrincipalStage.setScene(scene);
+        intPrincipalStage.show();
+        Stage myStage = (Stage) this.contIniciar.getScene().getWindow();
+        myStage.close();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hibernate.controlador;
 
+import com.example.hibernate.modelo.AmistadManager;
 import com.example.hibernate.modelo.Usuario;
 import com.example.hibernate.modelo.UsuarioManager;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class InterfazPrincipal implements Initializable {
@@ -27,10 +29,12 @@ public class InterfazPrincipal implements Initializable {
     public PasswordField contNuevoNombre;
     public Label nomUsuarioExistente;
     public Label contIncorrectaNuevNom;
+    public Label exitoCambiarNom;
 
     /* Cambiar la contraseña */
     public PasswordField nuevaCont;
     public PasswordField antCont;
+    public Label exitoCambiarCont;
 
     /* Eliminar Cuenta */
     public PasswordField contEliminarCuenta;
@@ -47,10 +51,10 @@ public class InterfazPrincipal implements Initializable {
 
     /* Panel de amigos */
     public Pane amigosPane;
-    public ScrollPane listaAmigos;
+
     public TextField nombreAmigoAnadir;
     public TextField nombreAmigoElimin;
-
+    public ListView listaAmigos;
 
 
     @Override
@@ -75,15 +79,21 @@ public class InterfazPrincipal implements Initializable {
         contIncorrectaNuevNom.setVisible(false);
 
         if (validarContra(contNuevoNombre.getText())){
-            if (UsuarioManager.updateUsuario(usuario.getId(), nuevoNombre.getText())) {
+            if (UsuarioManager.cambiarNombre(usuario.getId(), nuevoNombre.getText())) {
                 usuario.setNombre(nuevoNombre.getText());
                 inicializarNombreUsuario();
+                exitoCambiarNom.setVisible(true);
 
             }else nomUsuarioExistente.setVisible(true);
         }else contIncorrectaNuevNom.setVisible(true);
     }
 
     public void cambiarContrasena(MouseEvent mouseEvent) {
+        
+        if (validarContra(antCont.getText())){
+            UsuarioManager.cambiarContrasena(usuario.getId(), nuevaCont.getText());
+            exitoCambiarCont.setVisible(true);
+        }// TODO: 18/12/2023 Mostrar el error contraseña incorrecta 
     }
 
     public void eliminarCuent(MouseEvent mouseEvent) {
@@ -91,7 +101,7 @@ public class InterfazPrincipal implements Initializable {
     }
 
     public void confEliminarCuenta(MouseEvent mouseEvent) throws IOException {
-        UsuarioManager.deleteUsuario(usuario);
+        UsuarioManager.eliminarUsuario(usuario);
         abrirIncio();
 
     }
@@ -146,9 +156,60 @@ public class InterfazPrincipal implements Initializable {
 
     public void abrirAmigos(MouseEvent mouseEvent) {
         amigosPane.setVisible(true);
+        rellenarListaAmigos();
     }
+
+
 
     public void cerrarAmigos(MouseEvent mouseEvent) {
         amigosPane.setVisible(false);
+    }
+
+    public void rellenarListaAmigos(){
+        listaAmigos.getItems().clear();
+        List<Usuario> usuarios=UsuarioManager.obtenerAmigos(usuario.getId());
+        for (Usuario u :
+                usuarios) {
+            listaAmigos.getItems().add(u.getNombre());
+        }
+    }
+
+    public void anadirAmigo(MouseEvent mouseEvent) {
+        String nombreAmigo=nombreAmigoAnadir.getText();
+        List<Usuario> amigos = UsuarioManager.obtenerAmigos(usuario.getId());
+        boolean existeAmigo=false;
+
+        for (Usuario u :
+                amigos) {
+            if (nombreAmigo.equals(u.getNombre())){
+                existeAmigo=true;
+            }
+        }
+
+        if (!existeAmigo){
+            Usuario amigo = UsuarioManager.buscarUsuarioPorNombre(nombreAmigo);
+            AmistadManager.insertarAmistad(usuario,amigo);
+            rellenarListaAmigos();
+        }// TODO: 19/12/2023 mostrar error ya esta el amigo
+    }
+
+    public void eliminarAmigo(MouseEvent mouseEvent) {
+        String nombreAmigo=nombreAmigoElimin.getText();
+        List<Usuario> amigos = UsuarioManager.obtenerAmigos(usuario.getId());
+        boolean existeAmigo=false;
+
+        for (Usuario u :
+                amigos) {
+            if (nombreAmigo.equals(u.getNombre())){
+                existeAmigo=true;
+            }
+        }
+
+        if (existeAmigo){
+            Usuario amigo = UsuarioManager.buscarUsuarioPorNombre(nombreAmigo);
+            AmistadManager.eliminarAmistad(usuario, amigo);
+            rellenarListaAmigos();
+        }// TODO: 19/12/2023 mostrar error no existe ese amigo
+
     }
 }
